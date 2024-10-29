@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<!-- 기능별로 xml파일을 분리하여 bean을 등록하는 것이 가능.  -->
+	<!-- dbConfig파일이 복붙해서 들어간것과 똑같은 효과  -->
+	<import resource="dbConfig.xml"/>
+	
+	
+	<!-- component-scan: 해당 패키지를 스캔해서 필요한 객체들을 생성하거나 자동 주입시켜줌  -->
+	<context:component-scan base-package="com.rest.service"/>	
+	
+	<!-- SqlSessionFactoryBean: sqlSessionFactory를 생성해 줌 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="typeAliasesPackage" value="com.rest.vo"/>
+		<property name="mapperLocations" value="classpath:mapper/*.xml"/>
+	</bean>
+	
+	<mybatis-spring:scan base-package="com.rest.mapper"/>	
+	
+	<!-- tx관리자 객체 생성(jdbc, mybatis: DataSourceTransactionManager/ jpa, hibernate) -->
+	<bean id="tm" 
+			class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<!-- @Transactional이 동작하도록  -->
+	<tx:annotation-driven transaction-manager="tm"/>
+		
+</beans>

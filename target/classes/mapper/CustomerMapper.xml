@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper file: 실행시킬 query를 가지고 있는 파일 -->
+
+<mapper namespace="com.rest.mapper.CustomerMapper">
+
+	<select id="selectAll" resultType="Customer">
+		select * from customer
+	</select>
+	
+	<select id="selectOne" parameterType="string" resultType="Customer">
+		select * from customer where num = #{xxx}
+	</select>
+	
+	<insert id="insert" parameterType="Customer">
+		insert into customer values( #{num}, #{name}, #{address})
+	</insert>
+	
+	<delete id="delete">
+		delete from customer where num = #{num}
+	</delete>
+	
+	<update id="update" parameterType="Customer">
+		update customer set address = #{address} where num = #{num}	
+	</update>
+	
+	<select id="findByAddress" resultType="Customer">
+		select * from customer where address = #{address}
+	</select>
+	
+	<!-- 
+	<select id="search" resultType="Board" parameterType="map">
+		select * from board
+		<where>
+			<choose>
+				<when test="condition != null and condition == 'title'">
+					title like concat('%', #{word}, '%')
+				</when>
+				
+				<when test="condition != null and condition == 'name'">
+					name = #{word}
+				</when>
+			</choose>
+		</where>
+	</select>
+	
+	<insert id="txtest">
+		insert into board values('99','123', 'kim', sysdate(), 'title', 'content', 0)
+	</insert>
+	
+	
+	
+
+    
+	<resultMap type="Customer" id="EmpResult">
+		<result column="empid" property="num"/>
+		<result column="fname" property="name"/>
+		<result column="deptname" property="address"/>
+	</resultMap>	
+
+	<select id="joinSelect" resultMap="EmpResult">
+		select empid, fname, deptname
+		from emp e, dept d
+		where e.deptid = d.deptid
+	</select>
+	
+	<select id="joinSelect2" resultType="Customer">
+		select empid num, fname name, deptname address
+		from emp e, dept d
+		where e.deptid = d.deptid
+	</select>
+
+
+	
+	<select id="selectOne" parameterType="string" resultType="Customer">
+		select * from customer where num = #{xxx}
+	</select>
+	
+	<insert id="insert" parameterType="Customer">
+		insert into customer values( #{num}, #{name}, #{address})
+	</insert>
+
+	<update id="update" parameterType="Customer">
+		update customer set address = #{address} where num = #{num}	
+	</update>
+	
+	<update id="update2" parameterType="map">
+		update customer set address = #{address} where num = #{num}	
+	</update>
+ -->
+</mapper>
+
+
+
+
